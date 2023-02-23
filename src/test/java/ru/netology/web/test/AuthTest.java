@@ -27,13 +27,13 @@ class AuthTest {
     @DisplayName("Transfer from second to first card")
     void shouldTransferMoneyFromSecondToFirstCard() {
         int sum = 1000;
-        int begBalance1 = dashboardPage.getCardBalance("0");
-        int begBalance2 = dashboardPage.getCardBalance("1");
-        var refillCardBalancePage = dashboardPage.refillCard(0);
+        int begBalance1 = dashboardPage.getCardBalance(dashboardPage.card1);
+        int begBalance2 = dashboardPage.getCardBalance(dashboardPage.card2);
+        var refillCardBalancePage = dashboardPage.refillCard(dashboardPage.card1);
         var cardNum = DataHelper.getSecondCard();
         var dashboardPage2 = refillCardBalancePage.transferValue(cardNum, sum);
-        int endBalance1 = dashboardPage2.getCardBalance("0");
-        int endBalance2 = dashboardPage2.getCardBalance("1");
+        int endBalance1 = dashboardPage2.getCardBalance(dashboardPage.card1);
+        int endBalance2 = dashboardPage2.getCardBalance(dashboardPage.card2);
         assertEquals(begBalance1 + sum, endBalance1);
         assertEquals(begBalance2 - sum, endBalance2);
     }
@@ -42,13 +42,13 @@ class AuthTest {
     @DisplayName("Transfer from first to second card")
     void shouldTransferMoneyFromFirstToSecondCard() {
         int sum = 1000;
-        int begBalance1 = dashboardPage.getCardBalance("0");
-        int begBalance2 = dashboardPage.getCardBalance("1");
-        var refillCardBalancePage = dashboardPage.refillCard(1);
+        int begBalance1 = dashboardPage.getCardBalance(dashboardPage.card1);
+        int begBalance2 = dashboardPage.getCardBalance(dashboardPage.card2);
+        var refillCardBalancePage = dashboardPage.refillCard(dashboardPage.card2);
         var cardNum = DataHelper.getFirstCard();
         var dashboardPage2 = refillCardBalancePage.transferValue(cardNum, sum);
-        int endBalance1 = dashboardPage2.getCardBalance("0");
-        int endBalance2 = dashboardPage2.getCardBalance("1");
+        int endBalance1 = dashboardPage2.getCardBalance(dashboardPage.card1);
+        int endBalance2 = dashboardPage2.getCardBalance(dashboardPage.card2);
         assertEquals(begBalance1 - sum, endBalance1);
         assertEquals(begBalance2 + sum, endBalance2);
     }
@@ -56,9 +56,9 @@ class AuthTest {
     @Test
     @DisplayName("No transfer from second to first card")
     void shouldNotTransferMoneyFromSecondToFirstCard() {
-        int begBalance1 = dashboardPage.getCardBalance("1");
+        int begBalance1 = dashboardPage.getCardBalance(dashboardPage.card2);
         int sum = begBalance1 + 1000;
-        var refillCardBalancePage = dashboardPage.refillCard(0);
+        var refillCardBalancePage = dashboardPage.refillCard(dashboardPage.card1);
         var cardNum = DataHelper.getSecondCard();
         refillCardBalancePage.errorTransfer(cardNum, sum);
     }
