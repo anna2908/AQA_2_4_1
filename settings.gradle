@@ -1,0 +1,4 @@
+rootProject.name = 'AQA_2_4_1'
+include 'src:page'
+findProject(':src:page')?.name = 'page'
+
